@@ -45,6 +45,10 @@ bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/mai
 ```bash
 bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/ssh_keygen.sh)
 ```
+**Через irm для PowerShell:**
+```bash
+irm https://raw.githubusercontent.com/clarkxkent/my-bash-scripts/main/ssh_keygen.ps1 | iex
+```
 
 ---
 
@@ -79,6 +83,14 @@ bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/ma
   * Корректно связывает системный `/etc/resolv.conf` со службой `systemd-resolved`.
   * Делает автоматические бэкапы старых конфигураций и тестирует итоговое сетевое подключение.
 
+### 4. Генерация ключа SSH (`ssk_keygen.sh`)
+Скрипт для генерации приватного ключа SSH в формате ED25519 для защищённого подключения по протоколу SSH.
+* **Что он делает:**
+  * Запрашивает комментарий/Email для ключа (по умолчанию подставляет user@hostname).
+  * Запрашивает имя файла (по умолчанию id_ed25519).
+  * Создает директорию .ssh, если она отсутствует (с ограничением прав 700 в Unix-системах).
+  * Генерирует пара ключей с помощью ssh-keygen.
+  * Выводит публичный ключ в консоль и копирует его в буфер обмена.
 ---
 
 ## 📋 Системные требования
