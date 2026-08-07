@@ -36,6 +36,15 @@ bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/mai
 ```bash
 bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/resolvectl.sh)
 ```
+### 4. Генерация ключа ssh ed25519 для безопасного подключения к серверу
+**Через curl:**
+```bash
+bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/ssh_keygen.sh)
+```
+**Через wget:**
+```bash
+bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/ssh_keygen.sh)
+```
 
 ---
 
