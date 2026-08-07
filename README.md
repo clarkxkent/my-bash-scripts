@@ -6,37 +6,7 @@
 
 Вы можете запускать скрипты напрямую из терминала одной командой без предварительного клонирования репозитория с помощью `curl` или `wget`.
 
-### 1. Настройка SSH (Интерактивный режим)
-**Через curl:**
-```bash
-bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/config_ssh.sh)
-```
-**Через wget:**
-```bash
-bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/config_ssh.sh)
-```
-*Скрипт поддерживает как интерактивный ввод (задаст вопросы в терминале), так и передачу аргументов: `bash <(...) [порт] "[ключ]"`.*
-
-### 2. Установка и настройка Fail2Ban
-**Через curl:**
-```bash
-bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/install_f2b.sh)
-```
-**Через wget:**
-```bash
-bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/install_f2b.sh)
-```
-
-### 3. Настройка безопасного DNS (systemd-resolved)
-**Через curl:**
-```bash
-bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/resolvectl.sh)
-```
-**Через wget:**
-```bash
-bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/resolvectl.sh)
-```
-### 4. Генерация ключа ssh ed25519 для безопасного подключения к серверу
+### 1. Генерация ключа ssh ed25519 для безопасного подключения к серверу
 **Через curl:**
 ```bash
 bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/ssh_keygen.sh)
@@ -50,11 +20,51 @@ bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/ma
 irm https://raw.githubusercontent.com/clarkxkent/my-bash-scripts/main/ssh_keygen.ps1 | iex
 ```
 
+### 2. Настройка SSH (Интерактивный режим)
+**Через curl:**
+```bash
+bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/config_ssh.sh)
+```
+**Через wget:**
+```bash
+bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/config_ssh.sh)
+```
+*Скрипт поддерживает как интерактивный ввод (задаст вопросы в терминале), так и передачу аргументов: `bash <(...) [порт] "[ключ]"`.*
+
+### 3. Установка и настройка Fail2Ban
+**Через curl:**
+```bash
+bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/install_f2b.sh)
+```
+**Через wget:**
+```bash
+bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/install_f2b.sh)
+```
+
+### 4. Настройка безопасного DNS (systemd-resolved)
+**Через curl:**
+```bash
+bash <(curl -Ls https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/resolvectl.sh)
+```
+**Через wget:**
+```bash
+bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/main/resolvectl.sh)
+```
+
 ---
 
 ## 🛠️ Описание скриптов
 
-### 1. Защита и настройка SSH (`config_ssh.sh`)
+### 1. Генерация ключа SSH (`ssk_keygen.sh`)
+Скрипт для генерации приватного ключа SSH в формате ED25519 для защищённого подключения по протоколу SSH.
+* **Что он делает:**
+  * Запрашивает комментарий/Email для ключа (по умолчанию подставляет user@hostname).
+  * Запрашивает имя файла (по умолчанию id_ed25519).
+  * Создает директорию .ssh, если она отсутствует (с ограничением прав 700 в Unix-системах).
+  * Генерирует пара ключей с помощью ssh-keygen.
+  * Выводит публичный ключ в консоль и копирует его в буфер обмена.
+
+### 2. Защита и настройка SSH (`config_ssh.sh`)
 Скрипт автоматизирует базовую конфигурацию и защиту SSH-сервера.
 * **Что он делает:**
   * Запрашивает новый порт и публичный SSH-ключ (с валидацией ввода).
@@ -63,7 +73,7 @@ irm https://raw.githubusercontent.com/clarkxkent/my-bash-scripts/main/ssh_keygen
   * Отключает вход по паролю и запрещает root-доступ без ключа.
   * Отключает приветственные сообщения MOTD.
 
-### 2. Защита от брутфорса (`install_f2b.sh`)
+### 3. Защита от брутфорса (`install_f2b.sh`)
 Скрипт для автоматической установки и интерактивной настройки службы Fail2Ban.
 * **Что он делает:**
   * Запрашивает IP-адрес или подсеть для добавления в белый список (`ignoreip`).
@@ -74,7 +84,7 @@ irm https://raw.githubusercontent.com/clarkxkent/my-bash-scripts/main/ssh_keygen
   * Включает защиту от повторных атак через рецидив-джейл (`recidive`).
   * Автоматически выводит актуальный статус запущенных джейлов.
 
-### 3. Безопасный DNS (`resolvectl.sh`)
+### 4. Безопасный DNS (`resolvectl.sh`)
 Скрипт для настройки приватного и защищенного резолва имен через `systemd-resolved`.
 * **Что он делает:**
   * Переводит систему на использование надежных DNS-провайдеров (Google, Cloudflare, Quad9).
@@ -83,14 +93,6 @@ irm https://raw.githubusercontent.com/clarkxkent/my-bash-scripts/main/ssh_keygen
   * Корректно связывает системный `/etc/resolv.conf` со службой `systemd-resolved`.
   * Делает автоматические бэкапы старых конфигураций и тестирует итоговое сетевое подключение.
 
-### 4. Генерация ключа SSH (`ssk_keygen.sh`)
-Скрипт для генерации приватного ключа SSH в формате ED25519 для защищённого подключения по протоколу SSH.
-* **Что он делает:**
-  * Запрашивает комментарий/Email для ключа (по умолчанию подставляет user@hostname).
-  * Запрашивает имя файла (по умолчанию id_ed25519).
-  * Создает директорию .ssh, если она отсутствует (с ограничением прав 700 в Unix-системах).
-  * Генерирует пара ключей с помощью ssh-keygen.
-  * Выводит публичный ключ в консоль и копирует его в буфер обмена.
 ---
 
 ## 📋 Системные требования
