@@ -120,6 +120,8 @@ bash <(wget -qO- https://github.com/clarkxkent/my-bash-scripts/raw/refs/heads/ma
    ```
 4. Запустите нужный скрипт:
    ```bash
+   ./ssh_keygen.sh
+   # или
    ./config_ssh.sh
    # или
    ./install_f2b.sh
